@@ -1,0 +1,21 @@
+{
+	"short_name": "Simbol",
+	"name": "Simbol",
+	"icons": [
+		{
+			"src": "/dist/assets/images/icon-192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "/dist/assets/images/icon-512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"start_url": "/?utm_source=a2hs",
+	"background_color": "#FFFFFF",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#F9D656"
+}

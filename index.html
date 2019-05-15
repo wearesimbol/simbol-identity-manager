@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Simbol</title>
+	<meta name="theme-color" content="#F9D656"/>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="/dist/assets/images/logo-16.png"/>
+	<link rel="manifest" href="/manifest.json">
+	
+	<script>
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('serviceworker.js', { scope: '/' }).then((registration) => {
+				console.log('ServiceWorker registration successful with scope: ', registration.scope);
+			}, (err) => {
+				console.log('ServiceWorker registration failed: ', err);
+			});
+		}
+	</script>
+	<link rel="stylesheet" href="dist/style.css">
+	<script src="dist/polyfills.js" defer></script>
+	<script type="module" src="dist/index.js" defer></script>
+	<script class="protocol-bundle-script" src="dist/ipfs_orbitdb.js" defer></script>
+</head>
+<body class="">
+	<div class="page-error grid-container hide">
+		<div class="cols-fullwidth page-error__wrapper">
+			<p class="page-error__text">No VR devices connected</p>
+			<button class="page-error__close">×</button>
+		</div>
+	</div>
+
+	<header class="grid-container">
+		<div class="cols-fullwidth header">
+			<div class="header-left">
+				<div class="back hide">
+					<span class="back-icon icon icon--angle"></span>
+					<p class="back-text">Back</p>
+				</div>
+				<div class="toggle-wrapper hide">
+					<p class="toggle-text">2D</p>
+					<input type="checkbox" name="toggle1" class="toggle toggle-vr" id="toggle1">
+					<label class="toggle__label" for="toggle1"></label>
+					<p class="toggle-text">VR</p>
+				</div>
+			</div>
+	
+			<a href="/"><div class="header__logo">
+				<h1 class="heading__1" aria-hidden="true">Simbol</h1>
+				<span class="logo logo--main hide"></span>
+				<span class="logo logo--vertical hide"></span>
+			</div></a>
+	
+			<div class="if-signed-in header-right">
+				<button class="settings-button">
+					<span class="icon icon--gear settings-icon"></span>
+					<span aria-hidden="true">Settings</span>
+				</button>
+			</div>
+		</div>
+	</header>
+
+	<main class="grid-container">
+		<section class="if-signed-out cols-fullwidth sign-in">
+			<div class="sign-in__buttons">
+				<button class="button button--primary register" disabled>Register</button>
+				<button class="button button--secondary login" disabled>Log In</button>
+			</div>
+			
+			<div class="identity-picker hide">
+				<label class="input-label">Pick your Identity:</label>
+				<ul class="identity-picker__list"></ul>
+			</div>
+			
+			<div class="pick-avatar hide">
+				<label class="input-label">Choose your avatar:</label>
+				<div class="canvas-wrapper pick-avatar__canvas-wrapper"><canvas class="canvas pick-avatar__canvas"></canvas></div>
+				<button class="button button--primary pick-avatar__button">Select</button>
+			</div>
+			
+			<div class="pick-name hide">
+				<div class="input-wrapper">
+					<label class="input-label" for="pick-name__input">Enter your name:</label>
+					<input class="input pick-name__input" id="pick-name__input" placeholder="e.g. Batman">
+				</div>
+				<button class="button button--primary pick-name__button">Select</button>
+			</div>
+			
+			<p class="status">Loading...</p>
+		</section>
+		
+		<section class="if-signed-in cols-fullwidth profile">
+			<div class=profile__name-wrapper>
+				<h2 class="heading__2">Hi <span class="profile__name"></span></h2>
+				<input class="input profile__name-input hide" placeholder="e.g. Batman">
+				<i class="icon icon--edit profile__name-edit"></i>
+			</div>
+	
+			<div class="canvas-wrapper profile__avatar-wrapper"><canvas class="canvas profile__avatar"></canvas></div>
+			<div class="profile__avatar-edit">
+				<p class="avatar-edit__text">Edit</p>
+				<input class="input avatar-edit__input hide">
+				<i class="icon icon--edit avatar-edit__icon"></i>
+			</div>
+		</section>
+	
+		<div class="cols-fullwidth add-to-hs hide"><button class="add-to-hs__button">Install Simbol</button></div>
+	</main>
+	
+	<aside class="settings hide">
+		<div class="settings__wrapper">
+			<header class="settings__header">
+				<button class="settings__close">×</button>
+				<span class="logo logo--main settings__logo"></span>
+			</header>
+
+			<section class="settings__section">
+				<p class="settings__section-title">Identity</p>
+				<ul class="settings__section-list">
+					<li class="settings__section-item logout"><button class="settings-button">Log Out</button></li>
+				</ul>
+			</section>
+
+			<section>
+				<p class="settings__section-title">Settings</p>
+				<ul class="settings__section-list">
+					<li class="settings__section-item delete-identity"><button class="settings-button red">Delete Identity</button></li>
+				</ul>
+			</section>
+		</div>
+	</aside>
+
+	<div class="scene canvas-wrapper">
+		<canvas class="canvas"></canvas>
+	</div>
+
+	<template class="password-modal">
+			<section class="pick-password">
+				<p class="pick-password__explainer">It's your first time using Simbol on this device. Simbol needs a password to encrypt your data on the device.</p>
+				<div class="pick-password__form">
+					<div class="input-wrapper">
+						<label class="picker-label" for="pick-password__input">Password:</label>
+						<input class="input pick-password__input" id="pick-password__input" type="text">
+					</div>
+					<div class="input-wrapper input-wrapper--horizontal">
+						<label class="" for="pick-password__show">Show Password</label>
+						<input class="pick-password__show" id="pick-password__show" type="checkbox" checked data-for="pick-password__input">
+					</div>
+				</div>
+				<div class="input-wrapper input-wrapper--horizontal">
+					<label class="picker-label" for="pick-password__save">Save password for 30 days</label>
+					<input class="pick-password__save" id="pick-password__save" type="checkbox">
+				</div>
+				<p class="pick-password__notice">If you save your password, anyone with physical access to your device or via malware will be able to access your identity.</p>
+				<button class="button button--primary pick-password__button">Select</button>
+			</section>
+		</template>
+</body>
+</html>

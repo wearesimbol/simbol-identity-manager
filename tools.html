@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Simbol Identity Tools</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- import the webpage's stylesheet -->
+	<link rel="stylesheet" href="/style.css">
+	
+	<!-- import the webpage's javascript file -->
+	<script type="module" src="/tools.js" defer></script>
+</head>  
+<body>
+	<h1>Simbol Identity Tools</h1>
+	<p id="status">Loading...</p>
+	
+	<form class="resolve-did">
+		<label for="did">DID:</label>
+		<input class="resolve-did__input" name="did" type="text" placeholder="DID address. e.g. did:ipid:sdflkasflkasdflkjsaf">
+		<label for="did-doc">DID Document:</label>
+		<textarea class="resolve-did__textarea" name="did-doc" rows="50" readonly></textarea>
+	</form>
+	
+	<section class="dids">
+		<div class="local-did">
+			<h2 class="did-title">Your DID: <span class="did"></span></h2>
+			<pre class="did-doc"></pre>
+		</div>
+		
+		<div class="claims">
+			<h2 class="claims-title">Your claims:</h2>
+			<pre class="claims-doc"></pre>
+		</div>
+	</section>
+	
+</body>
+</html>

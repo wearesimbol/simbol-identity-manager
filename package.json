@@ -1,0 +1,38 @@
+{
+  "name": "simbol-identity-manager",
+  "version": "1.0.0",
+  "description": "Identity system for VR and AR",
+  "main": "src/js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dist": "npm run build && npm run libs && npm run workers && npm run assets",
+    "build": "npm run js:minify && npm run css",
+    "js": "rollup -c conf/rollup.config.js",
+    "js:minify": "MINIFY=true npm run js",
+    "js:watch": "WATCH=true rollup -c conf/rollup.config.js --watch",
+    "libs": "rollup -c conf/rollup.config.libs.js && cp libs/ipfs_orbitdb.js* dist/ && cp -r libs/draco dist/draco",
+    "workers": "mkdir -p dist/workers && cp src/js/workers/* dist/workers/",
+    "css": "cp src/css/style.css dist/style.css",
+    "assets": "rm -r dist/assets && cp -r assets dist/",
+    "surge": "npm run build && surge --domain https://simbol-identity.surge.sh"
+  },
+  "author": "Alberto Elias",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wearesimbol/simbol-identity-manager.git"
+  },
+  "dependencies": {
+    "simbol": "~0.1.0",
+    "task-worklet": "^0.1.1",
+    "three": "^0.103.0"
+  },
+  "devDependencies": {
+    "rollup": "^1.6.0",
+    "rollup-plugin-commonjs": "^9.2.1",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-terser": "^4.0.4"
+  }
+}
