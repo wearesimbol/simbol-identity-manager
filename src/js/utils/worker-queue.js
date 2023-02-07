@@ -1,16 +1,16 @@
 import {default as TaskQueue} from 'task-worklet'
 
-// const queue = new TaskQueue({size: 2})
-// const isReady = queue.addModule('workers/task-worker.js')
+const queue = new TaskQueue({size: 2})
+const isReady = queue.addModule('dist/workers/task-worker.js')
 
 class WorkerQueue {
 	
 	constructor() {
 		this.idleQueue = []
-		// this.queue = queue
+		this.queue = queue
 		this.isReady = false
 		this.runLoop = this.runLoop.bind(this)
-		// this.ready()
+		this.ready()
 	}
 	
 	async ready() {

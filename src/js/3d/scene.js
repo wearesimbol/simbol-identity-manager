@@ -102,9 +102,7 @@ class RoomScene {
 
 		const initialPosition = 0.85 - 0.08 * 2
 		for (const [i, color] of colorsEntries) {
-			console.log(i, color)
 			const yPosition = initialPosition - i * 0.2
-			console.log(yPosition)
 			const circleGeometry = new THREE.CircleBufferGeometry(0.08, 32)
 			const circleMaterial = new THREE.MeshBasicMaterial()
 			circleMaterial.color.setStyle(color)

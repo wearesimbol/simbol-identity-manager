@@ -139,7 +139,7 @@ class SimbolApp {
 		} catch {
 			this.apps && (this.apps.state = false)
 		}
-		// await workerQueue.ready()
+		await workerQueue.ready()
 
 		document.head.querySelector('.protocol-bundle-script').addEventListener('load', (async () => {
 			window.IPFS = protocolBundle.IPFS
@@ -148,55 +148,11 @@ class SimbolApp {
 			window.nacl = protocolBundle.nacl
 	
 			this.apps && this.apps.init()
-
-			const node = new IPFS({
-				repo: 'ipfs',
-				pass: this.deviceLock.password,
-				EXPERIMENTAL: {
-					pubsub: true,
-					ipnsPubsub: true,
-					dht: true
-				},
-				config: {
-					Addresses: {
-						Swarm: ['/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star']
-					}
-				}
-			})
-	
-			node.once('ready', async () => {
-				Store.cleanUpRegistration(this.ipfs)
-				console.log('Online status: ', node.isOnline() ? 'online' : 'offline')
-				this.orbitDB = await OrbitDB.createInstance(node)
-	
-				statusEl.classList.toggle('hide')
-				registerBtn.disabled = false
-				loginBtn.disabled = false
-				if (!this.authed) {
-					this.addEventHandlers()
-				} else {
-					const did = this.session.getProfilePublic().did
-					workerQueue.postIdleTask(() => {
-						return PublicProfile.create(did, this.keychain, this.orbitDB)
-					}, this)
-						.then((publicProfile) => this.publicProfile = publicProfile)
-					workerQueue.postIdleTask((publicProfile) => publicProfile.load())
-						.then((publicProfileCache) => {
-							this.session.setProfilePublic(publicProfileCache)
-							this.reloadProfile(publicProfileCache)
-							this._respondRegistrationRequest()
-						})
-						.catch((e) => {
-							console.log(e)
-							this._logoutHandler()
-						})
-				}
-			})
-
-			this.ipfs = node
-			this.keychain = new Keys(this.ipfs.key, this.session)
-			this.identity = new Identity(this.ipfs, this.session, this.keychain)
-			IpfsHelper.setIpfs(node)
+			workerQueue.postTask('create-claim', IPFS, OrbitDB, this.deviceLock.password)
+			// this.ipfs = node
+			// this.keychain = new Keys(this.ipfs.key, this.session)
+			// this.identity = new Identity(this.ipfs, this.session, this.keychain)
+			// IpfsHelper.setIpfs(node)
 		}))
 	}
 
