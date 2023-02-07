@@ -2,6 +2,8 @@
 
 Unfinished prototype of a DID identity manager. The DID protocol is IPFS based, and focuses on managing credentials for avatars that can be carried between virtual worlds. *Doesn't currently run as is*
 
+#### Dev notes
+
 Running localhost in Windows 10 with a domain:
 
 ```bash
